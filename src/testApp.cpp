@@ -73,7 +73,9 @@
      midiIn.addListener(this);
      
      // print received messages to the console
-     midiIn.setVerbose(true);
+     midiIn.setVerbose(false);
+     
+     rootFreq = 349.23; // f4
      
  }
 
@@ -174,18 +176,27 @@ void testApp::exit() {
 void testApp::newMidiMessage(ofxMidiMessage& msg) {
 
     
+
     
+
+
     midiMessage = msg;
     
-        if(midiMessage.channel == 0){
+        if(midiMessage.channel == 1){
+    cout << midiMessage.pitch << " i woking  " << endl;
     if((midiMessage.velocity != 0)){
         if (ofxMidiMessage::getStatusString(midiMessage.status) == "Note On"    ){
             lastMIDINoteIn = float(midiMessage.pitch -12);
             
             
-            frequency = 440 * pow(2.0,(lastMIDINoteIn-69.0+pitchBendDec)/12.0);
-            cout << "frequency: " << frequency << endl;
+            frequencyOne = 440 * pow(2.0,(lastMIDINoteIn-69.0+pitchBendDec)/12.0);
+           // cout << "frequencyOne: " << frequencyOne << endl;
 
+            ratioOne = frequencyOne / rootFreq;
+
+            speed[0] =ratioOne;
+            cout <<speed[0] << endl;
+            tween[0]->addTween(speed[0], 1, 500);
 
         }
         
@@ -203,18 +214,22 @@ void testApp::newMidiMessage(ofxMidiMessage& msg) {
         
     }
             
-            
+          }
 
-        if(midiMessage.channel == 1){
+        if(midiMessage.channel == 2){
+
             if((midiMessage.velocity != 0)){
                 if (ofxMidiMessage::getStatusString(midiMessage.status) == "Note On"    ){
                     lastMIDINoteIn = float(midiMessage.pitch -12);
                     
                     
-                    frequency = 440 * pow(2.0,(lastMIDINoteIn-69.0+pitchBendDec)/12.0);
-                    cout << "frequency: " << frequency << endl;
+                    frequencyTwo = 440 * pow(2.0,(lastMIDINoteIn-69.0+pitchBendDec)/12.0);
+                    cout << "frequencyTwo: " << frequencyTwo << endl;
                     
+                     ratioTwo = frequencyTwo / rootFreq;
                     
+                    speed[2] =ratioTwo;
+                    tween[2]->addTween(speed[2], 1, 500);
                 }
                 
                 // not really required but...
@@ -236,7 +251,7 @@ void testApp::newMidiMessage(ofxMidiMessage& msg) {
     
     
 }
-}
+
 
 
 

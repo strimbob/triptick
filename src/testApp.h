@@ -60,7 +60,11 @@ public:
     float pointOrderValue;
     float pointTime;
     float rad ;
-    float frequency;
+    float frequencyOne;
+    float frequencyTwo;
        float pitchBend, pitchBendDec, lastMIDINoteIn;
+    float rootFreq;
+    float ratioOne;
+    float ratioTwo;
     
 };
