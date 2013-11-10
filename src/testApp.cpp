@@ -2,43 +2,32 @@
 
 
 
-ofVec3f testApp::famly2Screen12(int x,int roseNumber) {
+ofVec3f testApp::famly2Screen12(int number,int x) {
 
-    
-    
-    
-    float pointOrderValue = x/(float)number;
-    float speedUp = speed*50000;
+
+    float pointOrderValue = (x+1)/(float)number;
+    float speedUp = speed[x]*50000;
     float pointTime = speedUp * pointOrderValue;
     float rad = MAX(2, len*.05);
     //////float CLScaler = 10000;
     
-    float speedUp2 = speed*100;
-    float theta = ofMap(x*TWO_PI,0,speedUp2 * TWO_PI, -1, 1.) / number;
+    float speedUp2 = speed[x]*100;
+    float theta = ofMap((x+1)*TWO_PI,0,speedUp2 * TWO_PI, -1, 1.) / number;
     float rsin = rad * sin(speedUp*theta);
     float rcos = rad * cos(speedUp*theta)/1.618;
     float rtan = rad * tan(speedUp*theta);
     
     // 'classic' Rose type
-    float len = x*rad/(float)number;
-    
-    //len *= sin(pointTime*speedUp/CLScaler);
-    //len *= cos(pointTime*speedUp/CLScaler);
-    //len *= tan(pointTime*speedUp/CLScaler);
-    //len *= atan2f((pointTime*speedUp/CLScaler), 1.618);
+    float len = (x+1)*rad/(float)number;
     
     temp.x = cos(pointTime)*len;
     temp.y = sin(pointTime)*len;
     
     temp.z = atan(theta)*rsin;
     
-    
-//    temp.x = cos(ofMap(x*TWO_PI, 0, TWO_PI+ speed[roseNumber],-1, 1.));
-//    temp.y = tan(ofMap(x/TWO_PI, 0, TWO_PI,+ speed[roseNumber] -1, 1.));
-//    temp.z = sin(ofMap(x*TWO_PI, 0, TWO_PI+ speed[roseNumber], -1, 1.));
-    temp.x = ofMap(temp.x, -1, 1,roseNumber * widthRose,(roseNumber * widthRose)+widthRose);
+    temp.x = ofMap(temp.x, -1, 1,x * widthRose,(x * widthRose)+widthRose);
     temp.y = ofMap(temp.y, -1, 1,0,ofGetHeight());
-    temp.z = ofMap(temp.z, -1, 1,roseNumber * widthRose, (roseNumber * widthRose)+widthRose);
+    temp.z = ofMap(temp.z, -1, 1,x * widthRose, (x * widthRose)+widthRose);
     return temp;
     
 }
@@ -99,9 +88,9 @@ void testApp::keyPressed(int key){
     switch (key) {
         case 'a':
             
-            tween[0]->addTween(speed[0], .00003, 2);
-            tween[1]->addTween(speed[2], .00013, 2);
-            tween[2]->addTween(speed[2], .00023, 2);
+            tween[0]->addTween(speed[0], ofRandom(10), 2);
+            tween[1]->addTween(speed[1], ofRandom(10), 2);
+            tween[2]->addTween(speed[2], ofRandom(10), 2);
             break;
         case 's':
 

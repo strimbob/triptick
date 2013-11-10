@@ -21,6 +21,7 @@ class testApp : public ofBaseApp{
     void numberChange();
     
     ofVec3f famly2Screen12(int x,int posX);
+        float len;
   //  float speed;
     ofVec3f temp;
     ofSoundPlayer play;
@@ -29,4 +30,12 @@ class testApp : public ofBaseApp{
     int widthRose;
       ofxTweener** tween;
     vector < float > speed;
+    
+    float rsin;
+    float theta;
+    float speedUp;
+    float speedUp2;
+    float pointOrderValue;
+    float pointTime;
+    float rad ;
 };
