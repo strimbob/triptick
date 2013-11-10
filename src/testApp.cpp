@@ -3,7 +3,9 @@
 
 
 ofVec3f testApp::famly2Screen12(int number,int x) {
-
+// hello
+    
+    float adsfasdf;
 
     float pointOrderValue = (x+1)/(float)number;
     float speedUp = speed[x]*50000;
