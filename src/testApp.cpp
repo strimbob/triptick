@@ -5,7 +5,7 @@
 ofVec3f testApp::famly2Screen12(int number,int x) {
 // hello i have change this
     // this is new
-    
+    float qqq;
     float adsfasdf;
     float www;
 
