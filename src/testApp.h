@@ -60,5 +60,7 @@ public:
     float pointOrderValue;
     float pointTime;
     float rad ;
+    float frequency;
+       float pitchBend, pitchBendDec, lastMIDINoteIn;
     
 };

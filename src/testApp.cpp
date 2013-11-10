@@ -54,10 +54,32 @@
  for(int i = 0; i<totalNumberRose; i++){
  tween[i]->addTween(speed[i], .0022, ofRandom(4));
  }
+     
+     
+     // print input ports to console
+     midiIn.listPorts(); // via instance
+     //ofxMidiIn::listPorts(); // via static as well
+     
+     // open port by number (you may need to change this)
+     midiIn.openPort(0);
+     //midiIn.openPort("IAC Pure Data In");	// by name
+     //midiIn.openVirtualPort("ofxMidiIn Input");	// open a virtual port
+     
+     // don't ignore sysex, timing, & active sense messages,
+     // these are ignored by default
+     midiIn.ignoreTypes(true, true   , true);
+     
+     // add testApp as a listener
+     midiIn.addListener(this);
+     
+     // print received messages to the console
+     midiIn.setVerbose(true);
+     
  }
- 
- 
- 
+
+
+
+
  //--------------------------------------------------------------
  void testApp::update(){
  for(int q = 0; q < totalNumberRose;q++){
@@ -150,11 +172,70 @@ void testApp::exit() {
 
 //--------------------------------------------------------------
 void testApp::newMidiMessage(ofxMidiMessage& msg) {
-    count ++;
-    cout << count << endl;
-	// make a copy of the latest message
-	midiMessage = msg;
+
     
+    
+    midiMessage = msg;
+    
+        if(midiMessage.channel == 0){
+    if((midiMessage.velocity != 0)){
+        if (ofxMidiMessage::getStatusString(midiMessage.status) == "Note On"    ){
+            lastMIDINoteIn = float(midiMessage.pitch -12);
+            
+            
+            frequency = 440 * pow(2.0,(lastMIDINoteIn-69.0+pitchBendDec)/12.0);
+            cout << "frequency: " << frequency << endl;
+
+
+        }
+        
+        // not really required but...
+        if (ofxMidiMessage::getStatusString(midiMessage.status) == "Note Off"){
+        }
+        
+        if (ofxMidiMessage::getStatusString(midiMessage.status) == "Pitch Bend"){
+            pitchBend = midiMessage.value;
+            pitchBendDec = ((pitchBend-8192)/4096);
+            
+            
+            
+        }
+        
+    }
+            
+            
+
+        if(midiMessage.channel == 1){
+            if((midiMessage.velocity != 0)){
+                if (ofxMidiMessage::getStatusString(midiMessage.status) == "Note On"    ){
+                    lastMIDINoteIn = float(midiMessage.pitch -12);
+                    
+                    
+                    frequency = 440 * pow(2.0,(lastMIDINoteIn-69.0+pitchBendDec)/12.0);
+                    cout << "frequency: " << frequency << endl;
+                    
+                    
+                }
+                
+                // not really required but...
+                if (ofxMidiMessage::getStatusString(midiMessage.status) == "Note Off"){
+                }
+                
+                if (ofxMidiMessage::getStatusString(midiMessage.status) == "Pitch Bend"){
+                    pitchBend = midiMessage.value;
+                    pitchBendDec = ((pitchBend-8192)/4096);
+                    
+                    
+                }
+
+            
+            
+            
+        }
+    }
+    
+    
+}
 }
 
 
